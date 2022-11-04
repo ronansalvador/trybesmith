@@ -1,8 +1,9 @@
 import express from 'express';
-// iniciando o projeto
+import router from './routers/routes';
 
 const app = express();
 
 app.use(express.json());
+app.use(router);
 
 export default app;
