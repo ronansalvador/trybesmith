@@ -5,13 +5,13 @@ import { IProduct } from '../interfaces';
 const validateProduct = (req: Request, res: Response, next: NextFunction) => {
   const product = req.body;
 
-  if (!product.name) {
-    return res.status(400).json({ message: '"name" is required' });
-  }
+  // if (!product.name) {
+  //   return res.status(400).json({ message: '"name" is required' });
+  // }
 
-  if (!product.amount) {
-    return res.status(400).json({ message: '"amount" is required' });
-  }
+  // if (!product.amount) {
+  //   return res.status(400).json({ message: '"amount" is required' });
+  // }
 
   const schema = Joi.object<IProduct>({
     name: Joi.string().min(3).required(),
@@ -20,8 +20,8 @@ const validateProduct = (req: Request, res: Response, next: NextFunction) => {
 
   const { error } = schema.validate(product);
   if (error) {
-    const { message } = error.details[0];
-    return res.status(422).json({ message });
+    const status = error.details[0].type === 'any.required' ? 400 : 422;
+    return res.status(status).json({ message: error.message });
   }
 
   return next();
