@@ -4,7 +4,6 @@ import { IProduct } from '../interfaces';
 
 const validateProduct = (req: Request, res: Response, next: NextFunction) => {
   const product = req.body;
-  console.log(product);
 
   if (!product.name) {
     return res.status(400).json({ message: '"name" is required' });
