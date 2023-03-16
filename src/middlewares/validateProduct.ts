@@ -20,6 +20,7 @@ const validateProduct = (req: Request, res: Response, next: NextFunction) => {
 
   const { error } = schema.validate(product);
   if (error) {
+    console.log('erro', error);
     const status = error.details[0].type === 'any.required' ? 400 : 422;
     return res.status(status).json({ message: error.message });
   }

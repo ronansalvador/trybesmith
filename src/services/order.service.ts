@@ -9,4 +9,21 @@ export default class OrderService {
     const result = await this.orderModel.getOders();
     return result;
   }
+
+  async orderPost() {
+    const error = await verifyProductsIds(orders.productsIds);
+
+    if (error.type) {
+      return error;
+    }
+
+    const orderId = await this.model.modelOrdersPost(orders);
+    const updatedProducts = orders.productsIds.map(async (productsId) => (
+      this.model.modelOrdersPut(productsId, orderId)
+    ));
+    await Promise.all(updatedProducts);
+
+    return { type: null, message: orders };
+  }
+  }
 }
